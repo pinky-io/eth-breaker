@@ -2,11 +2,15 @@ import React from 'react';
 import {SafeAreaView, StyleSheet, StatusBar} from 'react-native';
 import SplashView from './SplashView';
 
+import WagmiProvider from './wagmi/WagmiProvider';
+
 const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <SplashView />
-    </SafeAreaView>
+    <WagmiProvider>
+      <SafeAreaView style={styles.container}>
+        <SplashView />
+      </SafeAreaView>
+    </WagmiProvider>
   );
 };
 
