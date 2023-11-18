@@ -29,8 +29,6 @@ for term in terms_list:
         valuable_key = translation_dict[key_part]
         translated_values[term] = valuable_dict.get(valuable_key, "Not found")
 
-#print(translated_values)
-
 with open('output.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(translated_values)
@@ -47,3 +45,22 @@ for name in terms_list:
 combined_text = ' '.join(texts_to_combine)
 
 print(combined_text)
+
+
+from openai import OpenAI
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+api_key = os.getenv('OPENAI_API_KEY')
+
+client = OpenAI()
+completion = client.chat.completions.create(
+  model="gpt-3.5-turbo",
+  messages=[
+        {"role": "user", "content": f"Summarize the following text into a concise summary of about 150 characters: {combined_text}"}
+    ]
+)
+
+print(completion.choices[0].message)
