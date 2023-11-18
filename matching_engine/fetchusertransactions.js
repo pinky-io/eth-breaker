@@ -1,0 +1,58 @@
+import dotenv from 'dotenv';
+import axios from 'axios';
+
+dotenv.config();
+
+const etherscanApiKey = process.env.ETHERSCAN_API_KEY;
+const address = "0x1a1710F0238b516c2fad1dd0F1EAD108656Fdc32";
+
+const getTransactions = async () => {
+    const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=1000&sort=asc&apikey=${etherscanApiKey}`;
+
+    try {
+        console.log('Fetching transactions...');
+        const response = await axios.get(url);
+        const transactions = response.data.result;
+
+        console.log(`Total transactions fetched: ${transactions.length}`);
+        return transactions;
+    } catch (error) {
+        console.error('Error fetching transactions:', error);
+        return [];
+    }
+};
+
+const fetchContractData = async (contractAddress) => {
+    const url = `https://api.etherscan.io/api?module=contract&action=getsourcecode&address=${contractAddress}&apikey=${etherscanApiKey}`;
+
+    try {
+        //console.log(`Fetching contract data for address: ${contractAddress}`);
+        const response = await axios.get(url);
+        const contractData = response.data.result[0];
+
+        return {
+            address: contractAddress,
+            name: contractData.ContractName || 'Unnamed Contract',
+            isContract: true
+        };
+    } catch (error) {
+        console.error(`Error fetching contract data for address ${contractAddress}:`, error);
+        return { address: contractAddress, isContract: false };
+    }
+};
+
+const analyzeTransactions = async () => {
+    const transactions = await getTransactions();
+
+    for (const tx of transactions) {
+        if (tx.to) {
+            const contractInfo = await fetchContractData(tx.to);
+            if (contractInfo.isContract) {
+                //console.log(`Contract interaction found in transaction: ${tx.hash}`);
+                console.log(`Contract Address: ${contractInfo.address}, Contract Name: ${contractInfo.name}`);
+            }
+        }
+    }
+};
+
+analyzeTransactions();
