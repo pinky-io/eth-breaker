@@ -1,6 +1,11 @@
 import pandas as pd
+from openai import OpenAI
+from dotenv import load_dotenv
 import json
 import csv
+import os
+import requests
+
 
 with open('dapps_dictionary4.json', 'r') as file:
     valuable_dict = json.load(file)
@@ -46,11 +51,6 @@ combined_text = ' '.join(texts_to_combine)
 
 print(combined_text)
 
-
-from openai import OpenAI
-from dotenv import load_dotenv
-import os
-
 load_dotenv()
 
 api_key = os.getenv('OPENAI_API_KEY')
@@ -59,8 +59,41 @@ client = OpenAI()
 completion = client.chat.completions.create(
   model="gpt-3.5-turbo",
   messages=[
-        {"role": "user", "content": f"Summarize the following text into a concise summary of about 150 characters: {combined_text}"}
+        {"role": "user", "content": f"Summarize the following text into a concise summary of 200 characters, using small sentences talking a bit about everything and focusing more on the initial information and less on the details towards the end: {combined_text}"}
     ]
 )
 
-print(completion.choices[0].message)
+csv_path_wallet = '../currentwallet.csv'
+df_user = pd.read_csv(csv_path_wallet)
+df_user['summary'] = completion.choices[0].message.content
+
+print(completion.choices[0].message.content)
+
+print(df_user)
+
+url = 'https://enhanced-mastiff-99.hasura.app/api/rest/update-user'
+
+
+payload = {
+    'wallet_address': df_user['wallet'].iloc[0],
+    'summary': df_user['summary'].iloc[0]
+}
+
+print(type(df_user['wallet'].iloc[0]), type(df_user['summary'].iloc[0]))
+
+load_dotenv()
+api_key = os.getenv('x-hasura-admin-secret')
+print(api_key)
+headers = {
+    'Content-Type': 'application/json',
+    'x-hasura-admin-secret': api_key
+}
+
+try:
+    response = requests.patch(url, json=payload, headers=headers)
+    print(response.text)
+    print(response.status_code)  # HTTP status code
+    print(response.headers)     # Response headers
+    print(response.json()) 
+except requests.exceptions.RequestException as e:
+    print(f"Error making request: {e}")
