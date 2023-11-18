@@ -17,7 +17,7 @@ const HandleView = ({navigation}: Props) => {
     try {
       await createUser(tg_handle, address);
 
-      navigation.navigate('Profile');
+      navigation.navigate('LoaderView');
     } catch (error) {
       console.log('error', error);
     } finally {

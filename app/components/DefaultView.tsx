@@ -3,10 +3,13 @@ import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 
 type Props = {
   children: React.ReactNode;
+  style?: any;
 };
 
-const DefaultView = ({children}: Props) => {
-  return <SafeAreaView style={styles.container}>{children}</SafeAreaView>;
+const DefaultView = ({children, style}: Props) => {
+  return (
+    <SafeAreaView style={[styles.container, style]}>{children}</SafeAreaView>
+  );
 };
 
 export default DefaultView;
