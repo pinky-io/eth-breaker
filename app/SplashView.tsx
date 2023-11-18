@@ -7,8 +7,13 @@ import TelegramForm from './components/TelegramForm';
 import isSignatureVerified from './utils/isSignatureVerified';
 import {createUser, userIsRegistered} from './api';
 import ConnectionSection from './components/ConnectionSection';
+import {user} from './storage';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from './navigation/Stacks';
 
-function SplashView({}) {
+type Props = {} & NativeStackScreenProps<RootStackParamList, 'Home'>;
+
+function SplashView({navigation}: Props) {
   const {isConnected, address} = useAccount();
 
   const {
@@ -25,6 +30,8 @@ function SplashView({}) {
   useEffect(() => {
     async function verifiySignature() {
       if (signMessageData && variables?.message) {
+        console.log('signMessageData', signMessageData);
+
         const recoveredAddress = await recoverMessageAddress({
           message: variables?.message,
           signature: signMessageData,
@@ -43,17 +50,21 @@ function SplashView({}) {
 
       if (!isRegistered) {
         setShowTelegramInput(true);
-      } else {
-        setShowTelegramInput(false);
+        return;
       }
+
+      user.setUser(isRegistered);
+      navigation.navigate('Profile');
     }
 
     if (isSignatureVerified(verifiedAddress, address)) {
       connectUser();
     }
-  }, [address, verifiedAddress]);
+  }, [address, navigation, verifiedAddress]);
 
   const handleSignMessage = () => {
+    console.log('handleSignMessage');
+
     signMessage({message: 'This is my wallet.'});
   };
 
