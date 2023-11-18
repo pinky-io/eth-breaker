@@ -64,3 +64,6 @@ vendor/bundle/
 
 # testing
 /coverage
+
+# dot env
+.env
