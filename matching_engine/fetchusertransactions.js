@@ -1,13 +1,17 @@
 import dotenv from 'dotenv';
 import axios from 'axios';
+import fs from 'fs';
+import { parse } from 'json2csv';
 
 dotenv.config();
 
 const etherscanApiKey = process.env.ETHERSCAN_API_KEY;
-const address = "0x1a1710F0238b516c2fad1dd0F1EAD108656Fdc32";
+const loggedwallet = "0x25420F306A203A02e33Fd778FBd7867d76CfeB3E";
+
+let contractsData = [];
 
 const getTransactions = async () => {
-    const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=1000&sort=asc&apikey=${etherscanApiKey}`;
+    const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${loggedwallet}&startblock=0&endblock=99999999&page=1&offset=1000&sort=asc&apikey=${etherscanApiKey}`;
 
     try {
         console.log('Fetching transactions...');
@@ -48,11 +52,38 @@ const analyzeTransactions = async () => {
         if (tx.to) {
             const contractInfo = await fetchContractData(tx.to);
             if (contractInfo.isContract) {
-                //console.log(`Contract interaction found in transaction: ${tx.hash}`);
+                contractsData.push({
+                    address: tx.from,
+                    contractAddress: contractInfo.address,
+                    contractName: contractInfo.name
+                });
                 console.log(`Contract Address: ${contractInfo.address}, Contract Name: ${contractInfo.name}`);
             }
         }
     }
+    const fields = ['address', 'contractAddress', 'contractName'];
+    const opts = { fields };
+
+    try {
+
+        const csv = parse(contractsData, opts);
+        fs.writeFileSync('contractsData.csv', csv);
+
+        console.log('Contracts data saved to contractsData.csv');
+    } catch (err) {
+        console.error(err);
+    }
+
+    const walletData = [{ wallet: loggedwallet }];
+    try {
+        const csv = parse(walletData);
+        fs.writeFileSync('currentwallet.csv', csv);
+        console.log('Wallet data saved to currentwallet.csv');
+    } catch (err) {
+        console.error(err);
+    }
 };
 
+
 analyzeTransactions();
+
