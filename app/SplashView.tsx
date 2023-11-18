@@ -1,25 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  StatusBar,
-  Image,
-  SafeAreaView,
-  Dimensions,
-  Text,
-} from 'react-native';
-import ConnectWalletButton from './components/ConnectWalletButton';
+import {StyleSheet, StatusBar, SafeAreaView, Text, View} from 'react-native';
 import {useAccount, useSignMessage} from 'wagmi';
-import ActionButton from './components/ActionButton';
 import {recoverMessageAddress} from 'viem';
-import {SECRET_HASURA, HASURA_ENDPOINT} from '@env';
-import axios from 'axios';
 
-function isSignatureVerified(verifiedAddresses: string[], address?: string) {
-  if (!address) {
-    return false;
-  }
-  return verifiedAddresses.includes(address);
-}
+import TelegramForm from './components/TelegramForm';
+import isSignatureVerified from './utils/isSignatureVerified';
+import {createUser, userIsRegistered} from './api';
+import ConnectionSection from './components/ConnectionSection';
 
 function SplashView({}) {
   const {isConnected, address} = useAccount();
@@ -31,9 +18,9 @@ function SplashView({}) {
     variables,
   } = useSignMessage();
   const [verifiedAddress, setVerifiedAddress] = useState<`0x${string}`[]>([]);
+  const [showTelegramInput, setShowTelegramInput] = useState(false);
 
-  const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
+  const isVerified = isSignatureVerified(verifiedAddress, address);
 
   useEffect(() => {
     async function verifiySignature() {
@@ -51,25 +38,18 @@ function SplashView({}) {
   }, [error, signMessageData, variables]);
 
   useEffect(() => {
-    async function createUser() {
-      try {
-        const userData = await axios.get(
-          HASURA_ENDPOINT + 'get-user?wallet_address=' + address,
-          {
-            headers: {
-              'x-hasura-admin-secret': SECRET_HASURA,
-            },
-          },
-        );
+    async function connectUser() {
+      const isRegistered = await userIsRegistered(address);
 
-        console.log('data', userData.data);
-      } catch (e) {
-        console.log('error', e);
+      if (!isRegistered) {
+        setShowTelegramInput(true);
+      } else {
+        setShowTelegramInput(false);
       }
     }
 
     if (isSignatureVerified(verifiedAddress, address)) {
-      createUser();
+      connectUser();
     }
   }, [address, verifiedAddress]);
 
@@ -79,23 +59,21 @@ function SplashView({}) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" />
-      <ConnectWalletButton />
-      <Text style={styles.text}>
-        {isConnected ? 'Connected !' : 'Sign in with wallet connect'}
-      </Text>
-      {isConnected && (
-        <ActionButton text="Sign a message" onPress={handleSignMessage} />
-      )}
-      <Text style={styles.text}>
-        {isSignatureVerified(verifiedAddress, address) && 'Verified'}
-      </Text>
-
-      <Image
-        source={require('./assets/images/Cover.png')}
-        resizeMode="contain"
-        style={{width: screenWidth, height: screenHeight}}
-      />
+      <View style={styles.upperContainer}>
+        <Text style={styles.text}>ETHBreaker</Text>
+      </View>
+      <View style={styles.middleContainer}>
+        <ConnectionSection
+          address={address}
+          handleSignMessage={handleSignMessage}
+          isConnected={isConnected}
+          verifiedAddress={verifiedAddress}
+        />
+      </View>
+      <View style={styles.lowerContainer}>
+        <Text style={styles.text}>{isVerified && 'Verified'}</Text>
+        {showTelegramInput && <TelegramForm onButtonPress={createUser} />}
+      </View>
     </SafeAreaView>
   );
 }
@@ -106,13 +84,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(29,38,51,1)',
     marginTop: StatusBar.currentHeight || 0,
   },
-  actionButton: {
-    textAlign: 'center',
-    position: 'absolute',
-    bottom: 0,
-    alignSelf: 'center',
-    marginBottom: 50,
+  upperContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+  middleContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  lowerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   text: {
     color: 'white',
     fontSize: 20,
