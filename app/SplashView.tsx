@@ -11,6 +11,7 @@ import ConnectWalletButton from './components/ConnectWalletButton';
 import {useAccount, useSignMessage} from 'wagmi';
 import ActionButton from './components/ActionButton';
 import {recoverMessageAddress} from 'viem';
+import {SECRET_HASURA} from '@env';
 
 function isSignatureVerified(verifiedAddresses: string[], address?: string) {
   if (!address) {
@@ -40,8 +41,6 @@ function SplashView({}) {
           message: variables?.message,
           signature: signMessageData,
         });
-
-        console.log('recoveredAddress', recoveredAddress);
 
         setVerifiedAddress(prev => [...prev, recoveredAddress]);
       }
@@ -73,6 +72,8 @@ function SplashView({}) {
       <Text style={styles.text}>
         {isSignatureVerified(verifiedAddress, address) && 'Verified'}
       </Text>
+
+      <Text style={styles.text}>{SECRET_HASURA}</Text>
       <Image
         source={require('./assets/images/Cover.png')}
         resizeMode="contain"
