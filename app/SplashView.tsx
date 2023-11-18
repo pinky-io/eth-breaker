@@ -72,7 +72,11 @@ function SplashView({}) {
       </View>
       <View style={styles.lowerContainer}>
         <Text style={styles.text}>{isVerified && 'Verified'}</Text>
-        {showTelegramInput && <TelegramForm onButtonPress={createUser} />}
+        {showTelegramInput && (
+          <TelegramForm
+            onButtonPress={tg_handle => createUser(tg_handle, address)}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
