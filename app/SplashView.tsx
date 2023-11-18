@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   Dimensions,
 } from 'react-native';
-import ActionButton from './components/ActionButton';
+import {W3mButton} from '@web3modal/wagmi-react-native';
 
 function SplashView({}) {
   const screenWidth = Dimensions.get('window').width;
@@ -15,7 +15,7 @@ function SplashView({}) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
-      <ActionButton text="Connect Wallet" style={styles.actionButton} />
+      <W3mButton />
       <Image
         source={require('./assets/images/Cover.png')}
         resizeMode="contain"
