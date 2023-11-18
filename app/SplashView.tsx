@@ -11,7 +11,8 @@ import ConnectWalletButton from './components/ConnectWalletButton';
 import {useAccount, useSignMessage} from 'wagmi';
 import ActionButton from './components/ActionButton';
 import {recoverMessageAddress} from 'viem';
-import {SECRET_HASURA} from '@env';
+import {SECRET_HASURA, HASURA_ENDPOINT} from '@env';
+import axios from 'axios';
 
 function isSignatureVerified(verifiedAddresses: string[], address?: string) {
   if (!address) {
@@ -50,8 +51,25 @@ function SplashView({}) {
   }, [error, signMessageData, variables]);
 
   useEffect(() => {
+    async function createUser() {
+      try {
+        const userData = await axios.get(
+          HASURA_ENDPOINT + 'get-user?wallet_address=' + address,
+          {
+            headers: {
+              'x-hasura-admin-secret': SECRET_HASURA,
+            },
+          },
+        );
+
+        console.log('data', userData.data);
+      } catch (e) {
+        console.log('error', e);
+      }
+    }
+
     if (isSignatureVerified(verifiedAddress, address)) {
-      console.log('Signature verified');
+      createUser();
     }
   }, [address, verifiedAddress]);
 
@@ -73,7 +91,6 @@ function SplashView({}) {
         {isSignatureVerified(verifiedAddress, address) && 'Verified'}
       </Text>
 
-      <Text style={styles.text}>{SECRET_HASURA}</Text>
       <Image
         source={require('./assets/images/Cover.png')}
         resizeMode="contain"
