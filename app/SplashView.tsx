@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, StatusBar, SafeAreaView, Text, View} from 'react-native';
+import {StyleSheet, StatusBar, Text, View} from 'react-native';
 import {useAccount, useSignMessage} from 'wagmi';
 import {recoverMessageAddress} from 'viem';
 
-import TelegramForm from './components/TelegramForm';
 import isSignatureVerified from './utils/isSignatureVerified';
-import {createUser, userIsRegistered} from './api';
+import {userIsRegistered} from './api';
 import ConnectionSection from './components/ConnectionSection';
 import {user} from './storage';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from './navigation/Stacks';
+import DefaultView from './components/DefaultView';
 
-type Props = {} & NativeStackScreenProps<RootStackParamList, 'Home'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 function SplashView({navigation}: Props) {
   const {isConnected, address} = useAccount();
@@ -23,9 +23,6 @@ function SplashView({navigation}: Props) {
     variables,
   } = useSignMessage();
   const [verifiedAddress, setVerifiedAddress] = useState<`0x${string}`[]>([]);
-  const [showTelegramInput, setShowTelegramInput] = useState(false);
-
-  const isVerified = isSignatureVerified(verifiedAddress, address);
 
   useEffect(() => {
     async function verifiySignature() {
@@ -49,7 +46,7 @@ function SplashView({navigation}: Props) {
       const isRegistered = await userIsRegistered(address);
 
       if (!isRegistered) {
-        setShowTelegramInput(true);
+        navigation.navigate('HandleView');
         return;
       }
 
@@ -69,11 +66,11 @@ function SplashView({navigation}: Props) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <DefaultView>
       <View style={styles.upperContainer}>
         <Text style={styles.text}>ETHBreaker</Text>
       </View>
-      <View style={styles.middleContainer}>
+      <View style={styles.lowerContainer}>
         <ConnectionSection
           address={address}
           handleSignMessage={handleSignMessage}
@@ -81,15 +78,7 @@ function SplashView({navigation}: Props) {
           verifiedAddress={verifiedAddress}
         />
       </View>
-      <View style={styles.lowerContainer}>
-        <Text style={styles.text}>{isVerified && 'Verified'}</Text>
-        {showTelegramInput && (
-          <TelegramForm
-            onButtonPress={tg_handle => createUser(tg_handle, address)}
-          />
-        )}
-      </View>
-    </SafeAreaView>
+    </DefaultView>
   );
 }
 
@@ -104,11 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  middleContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   lowerContainer: {
     flex: 1,
     justifyContent: 'center',

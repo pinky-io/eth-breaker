@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet} from 'react-native';
 import isSignatureVerified from '../utils/isSignatureVerified';
 import ConnectWalletButton from './ConnectWalletButton';
 import ActionButton from './ActionButton';
@@ -20,11 +20,13 @@ const ConnectionSection = ({
   return (
     <>
       <ConnectWalletButton />
-      <Text style={styles.text}>
-        {isConnected ? 'Connected !' : 'Sign in with wallet connect'}
-      </Text>
+
       {isConnected && !isSignatureVerified(verifiedAddress, address) && (
-        <ActionButton text="Verify signature" onPress={handleSignMessage} />
+        <ActionButton
+          text="Verify signature"
+          onPress={handleSignMessage}
+          style={styles.button}
+        />
       )}
     </>
   );
@@ -37,5 +39,8 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  button: {
+    marginTop: 20,
   },
 });
