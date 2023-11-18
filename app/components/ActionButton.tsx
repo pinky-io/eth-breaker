@@ -6,21 +6,17 @@ const screenWidth = Dimensions.get('window').width;
 
 type Props = {
   text: string;
-  style?: any;
+
   onPress?: () => void;
 };
 
-function ActionButton({text, style, onPress}: Props) {
+function ActionButton({text, onPress}: Props) {
   return (
-    <TouchableOpacity style={[ButtonStyle.container, style]}>
-      <TouchableOpacity
-        onPress={onPress}
-        style={[ButtonStyle.button, {width: screenWidth * 0.8}]} // 80% de la largeur de l'écran
-      >
-        <Text style={ButtonStyle.text}>
-          {text || 'Sign in with WalletConnect'}
-        </Text>
-      </TouchableOpacity>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[ButtonStyle.button, {width: screenWidth * 0.8}]} // 80% de la largeur de l'écran
+    >
+      <Text style={ButtonStyle.text}>{text}</Text>
     </TouchableOpacity>
   );
 }

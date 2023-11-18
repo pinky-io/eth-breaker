@@ -387,6 +387,8 @@ PODS:
     - React-Core
   - react-native-netinfo (11.1.0):
     - React-Core
+  - react-native-safe-area-context (4.7.4):
+    - React-Core
   - React-NativeModulesApple (0.72.7):
     - hermes-engine
     - React-callinvoker
@@ -501,6 +503,9 @@ PODS:
     - React-Core
   - RNPermissions (3.10.1):
     - React-Core
+  - RNScreens (3.27.0):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
   - RNSVG (14.0.0):
     - React-Core
   - SocketRocket (0.6.1)
@@ -558,6 +563,7 @@ DEPENDENCIES:
   - "react-native-compat (from `../node_modules/@walletconnect/react-native-compat`)"
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
+  - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -577,6 +583,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - RNPermissions (from `../node_modules/react-native-permissions`)
+  - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -650,6 +657,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-get-random-values"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
+  react-native-safe-area-context:
+    :path: "../node_modules/react-native-safe-area-context"
   React-NativeModulesApple:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios"
   React-perflogger:
@@ -688,6 +697,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNPermissions:
     :path: "../node_modules/react-native-permissions"
+  RNScreens:
+    :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   Yoga:
@@ -732,6 +743,7 @@ SPEC CHECKSUMS:
   react-native-compat: 95163fd7204c68fb0a201d24ad10fbc03a60c67e
   react-native-get-random-values: dee677497c6a740b71e5612e8dbd83e7539ed5bb
   react-native-netinfo: 3aa5637c18834966e0c932de8ae1ae56fea20a97
+  react-native-safe-area-context: 2cd91d532de12acdb0a9cbc8d43ac72a8e4c897c
   React-NativeModulesApple: b6868ee904013a7923128892ee4a032498a1024a
   React-perflogger: 31ea61077185eb1428baf60c0db6e2886f141a5a
   React-RCTActionSheet: 392090a3abc8992eb269ef0eaa561750588fc39d
@@ -751,6 +763,7 @@ SPEC CHECKSUMS:
   ReactCommon: 5f704096ccf7733b390f59043b6fa9cc180ee4f6
   RNCAsyncStorage: f2974eca860c16a3e56eea5771fda8d12e2d2057
   RNPermissions: ef4454dc8a1dd5680e57ba0c5439d9cf7e3feff8
+  RNScreens: 3c2d122f5e08c192e254c510b212306da97d2581
   RNSVG: 255767813dac22db1ec2062c8b7e7b856d4e5ae6
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
