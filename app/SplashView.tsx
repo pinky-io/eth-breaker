@@ -27,8 +27,6 @@ function SplashView({navigation}: Props) {
   useEffect(() => {
     async function verifiySignature() {
       if (signMessageData && variables?.message) {
-        console.log('signMessageData', signMessageData);
-
         const recoveredAddress = await recoverMessageAddress({
           message: variables?.message,
           signature: signMessageData,
@@ -51,7 +49,7 @@ function SplashView({navigation}: Props) {
       }
 
       user.setUser(isRegistered);
-      navigation.navigate('Profile');
+      navigation.navigate('LoaderView');
     }
 
     if (isSignatureVerified(verifiedAddress, address)) {
@@ -60,8 +58,6 @@ function SplashView({navigation}: Props) {
   }, [address, navigation, verifiedAddress]);
 
   const handleSignMessage = () => {
-    console.log('handleSignMessage');
-
     signMessage({message: 'This is my wallet.'});
   };
 
