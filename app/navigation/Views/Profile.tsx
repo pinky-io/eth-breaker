@@ -1,11 +1,12 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, StyleSheet, Text} from 'react-native';
+import {StatusBar, StyleSheet, Text} from 'react-native';
+import DefaultView from '../../components/DefaultView';
 
 const Profile = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <DefaultView>
       <Text style={styles.text}>Profile</Text>
-    </SafeAreaView>
+    </DefaultView>
   );
 };
 

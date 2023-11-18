@@ -5,6 +5,7 @@ import ButtonStyle from './Button.style';
 const ConnectWalletButton = () => {
   return (
     <W3mButton
+      label="Sign in with WalletConnect"
       accountStyle={ButtonStyle.button}
       connectStyle={ButtonStyle.button}
     />
