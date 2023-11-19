@@ -13,11 +13,14 @@ const HandleView = ({navigation}: Props) => {
   const [loading, setLoading] = useState(false);
 
   const handlePress = async (tg_handle: string) => {
+    if (!address) {
+      return;
+    }
     setLoading(true);
     try {
       await createUser(tg_handle, address);
 
-      navigation.navigate('LoaderView');
+      navigation.navigate('LoaderView', {walletAddress: address});
     } catch (error) {
       console.log('error', error);
     } finally {

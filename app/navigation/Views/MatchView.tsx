@@ -2,8 +2,14 @@ import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import DefaultView from '../../components/DefaultView';
 import ActionButton from '../../components/ActionButton';
+import {RootStackParamList} from '../Stacks';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-const MatchView = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'MatchView'>;
+
+const MatchView = ({route}: Props) => {
+  const {walletAddress} = route.params;
+
   return (
     <DefaultView>
       <View style={styles.section}>

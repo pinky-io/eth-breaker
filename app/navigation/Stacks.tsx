@@ -7,9 +7,9 @@ import MatchView from './Views/MatchView';
 
 export type RootStackParamList = {
   Home: undefined;
-  LoaderView: undefined;
+  LoaderView: {walletAddress: `0x${string}`};
   HandleView: undefined;
-  MatchView: undefined;
+  MatchView: {walletAddress: `0x${string}`};
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
