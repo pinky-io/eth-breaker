@@ -6,7 +6,7 @@ import { parse } from 'json2csv';
 dotenv.config();
 
 const etherscanApiKey = process.env.ETHERSCAN_API_KEY;
-const loggedwallet = "0x25420F306A203A02e33Fd778FBd7867d76CfeB3E";
+const loggedwallet = "0x1a1710F0238b516c2fad1dd0F1EAD108656Fdc32";
 
 let contractsData = [];
 
