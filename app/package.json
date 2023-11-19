@@ -10,8 +10,10 @@
     "test": "jest"
   },
   "dependencies": {
+    "@pushprotocol/reactnative": "^0.2.0",
     "@react-native-async-storage/async-storage": "^1.19.5",
     "@react-native-community/netinfo": "^11.1.0",
+    "@react-native-masked-view/masked-view": "^0.3.0",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
     "@walletconnect/react-native-compat": "^2.10.5",
@@ -27,6 +29,8 @@
     "react-native-screens": "^3.27.0",
     "react-native-storage": "^1.0.1",
     "react-native-svg": "^14.0.0",
+    "react-native-video": "^5.2.1",
+    "react-native-youtube": "^2.0.2",
     "viem": "^1.19.3",
     "wagmi": "^1.4.7"
   },
