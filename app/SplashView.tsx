@@ -7,6 +7,7 @@ import TelegramForm from './components/TelegramForm';
 import isSignatureVerified from './utils/isSignatureVerified';
 import {createUser, userIsRegistered} from './api';
 import ConnectionSection from './components/ConnectionSection';
+import WakuPage from './components/WakuPage';
 
 function SplashView({}) {
   const {isConnected, address} = useAccount();
@@ -61,6 +62,7 @@ function SplashView({}) {
     <SafeAreaView style={styles.container}>
       <View style={styles.upperContainer}>
         <Text style={styles.text}>ETHBreaker</Text>
+        <WakuPage />
       </View>
       <View style={styles.middleContainer}>
         <ConnectionSection
