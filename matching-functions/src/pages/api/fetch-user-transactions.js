@@ -1,6 +1,7 @@
 import { allowCors } from "@/allowCors";
 import axios from "axios";
 
+export const maxDuration = 100; // This function can run for a maximum of 5 seconds
 const etherscanApiKey = process.env.ETHERSCAN_API_KEY;
 
 let contractsData = [];
