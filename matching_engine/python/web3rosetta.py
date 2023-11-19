@@ -23,7 +23,8 @@ translation_dict = {
     "UniversalRouter": "Uniswap",
     "PublicResolver": "ENS",
     "InitializableAdminUpgradeabilityProxy": "Aave",
-    "L1ChugSplashProxy": "Base Bridge"
+    "L1ChugSplashProxy": "Base Bridge",
+    "KittyCore":"CryptoKitties"
 }
 
 translated_values = {}
@@ -65,6 +66,7 @@ csv_path_wallet = '../currentwallet.csv'
 df_user = pd.read_csv(csv_path_wallet)
 df_user['summary'] = completion.choices[0].message.content
 
+df_user.to_csv('./similaritydata.csv')
 
 url = 'https://enhanced-mastiff-99.hasura.app/api/rest/update-user'
 
