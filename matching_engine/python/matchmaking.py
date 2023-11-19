@@ -31,3 +31,23 @@ ranked_preferences = {wallet: sim_df.loc[wallet].sort_values(ascending=False).in
 ranked_preferences = {df.iloc[row]['wallet']: sim_df.iloc[row].sort_values(ascending=False).index.tolist() for row in range(len(df))}
 
 df['preference'] = df['wallet'].apply(lambda wallet: [df['wallet'][index] for index in ranked_preferences[wallet]][:3])
+
+url = 'https://enhanced-mastiff-99.hasura.app/api/rest/update-preferences'
+
+payload = {
+    'wallet_address': df.wallet.iloc[0],
+    'preferences': df.preference.iloc[0]
+}
+
+load_dotenv()
+api_key = os.getenv('x-hasura-admin-secret')
+headers = {
+    'Content-Type': 'application/json',
+    'x-hasura-admin-secret': api_key
+}
+
+try:
+    response = requests.patch(url, json=payload, headers=headers)
+    print(response.text)
+except requests.exceptions.RequestException as e:
+    print(f"Error making request: {e}")
