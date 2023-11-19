@@ -1,0 +1,14 @@
+{
+    "type": "module",
+    "scripts": {
+        "start-js": "node fetchusertransactions.js",
+        "start-py": "python3 python/your_script.py",
+        "start-all": "npm run start-js && npm run start-py"
+    },
+    "dependencies": {
+        "alchemy-sdk": "^3.0.0",
+        "axios": "^1.6.2",
+        "dotenv": "^16.3.1",
+        "json2csv": "^6.0.0-alpha.2"
+    }
+}
