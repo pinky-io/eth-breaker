@@ -1,0 +1,5 @@
+{"ENS": """he Ethereum Name Service (ENS) is a distributed, open, and extensible naming system based on the Ethereum blockchain. ENS's job is to map human-readable names like 'alice. eth' to machine-readable identifiers such as Ethereum addresses, other cryptocurrency addresses, content hashes, and metadata.""",
+"OpenSea": """OpenSea is a decentralized marketplace for the purchase and sale of NFTs. Users can buy, collect, trade and gift NFTs on the marketplace. Developers can run an in-app economy with OpenSea.js, run their own marketplace and access the OpenSea API for data on sales, listings, bids and transfers. The platform has one of the lowest commission fees for purchasing and selling NFTs.""",
+"RocketPool": """Rocket Pool is a liquid Ethereum staking protocol. The protocol is decentralized and governed using the RPL token by a network DAO.""",
+"Uniswap": """One of the first and largest Ethereum-based decentralized exchanges, Uniswap pioneered the concept of an automated market maker, which other decentralized exchanges are based on. Instead of using order books, Uniswap aggregates liquidity through pre-funded and user-funded liquidity pools (LPs).""",
+}
