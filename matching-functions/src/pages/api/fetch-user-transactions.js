@@ -1,3 +1,4 @@
+import { allowCors } from "@/allowCors";
 import axios from "axios";
 
 const etherscanApiKey = process.env.ETHERSCAN_API_KEY;
@@ -42,7 +43,7 @@ const fetchContractData = async (contractAddress) => {
   }
 };
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   const walletAddress = req.query.wallet_address;
 
   const transactions = await getTransactions(walletAddress);
@@ -65,3 +66,5 @@ export default async function handler(req, res) {
 
   res.status(200).json({ contractsData, walletAddress });
 }
+
+export default allowCors(handler);
