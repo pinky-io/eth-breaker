@@ -7,9 +7,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'MatchView'>;
 
-const MatchView = ({route}: Props) => {
-  const {walletAddress} = route.params;
-
+const MatchView = ({}: Props) => {
   return (
     <DefaultView>
       <View style={styles.section}>
@@ -20,16 +18,16 @@ const MatchView = ({route}: Props) => {
       </View>
       <View style={styles.section}>
         <View style={styles.row}>
-          <Text>🥇</Text>
-          <Text style={styles.contractText}>Contract Name</Text>
+          <Text style={styles.contractText}>Contract in common :</Text>
         </View>
         <View style={styles.row}>
-          <Text>🥈</Text>
-          <Text style={styles.contractText}>Contract Name</Text>
+          <Text style={styles.contractText}>🥇 Rocket Pool</Text>
         </View>
         <View style={styles.row}>
-          <Text>🥉</Text>
-          <Text style={styles.contractText}>Contract Name</Text>
+          <Text style={styles.contractText}>🥈 Lens Protocol</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.contractText}>🥉 ENS</Text>
         </View>
       </View>
       <View style={styles.section}>
@@ -67,5 +65,10 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+
+  addressText: {
+    color: 'white',
+    fontSize: 16,
   },
 });

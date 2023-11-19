@@ -41,6 +41,9 @@ function SplashView({navigation}: Props) {
 
   useEffect(() => {
     async function connectUser() {
+      if (!address) {
+        return;
+      }
       const isRegistered = await userIsRegistered(address);
 
       if (!isRegistered) {
@@ -48,8 +51,7 @@ function SplashView({navigation}: Props) {
         return;
       }
 
-      user.setUser(isRegistered);
-      navigation.navigate('LoaderView');
+      navigation.navigate('LoaderView', {walletAddress: address});
     }
 
     if (isSignatureVerified(verifiedAddress, address)) {
