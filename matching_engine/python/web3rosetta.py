@@ -49,8 +49,6 @@ for name in terms_list:
 
 combined_text = ' '.join(texts_to_combine)
 
-print(combined_text)
-
 load_dotenv()
 
 api_key = os.getenv('OPENAI_API_KEY')
@@ -67,23 +65,16 @@ csv_path_wallet = '../currentwallet.csv'
 df_user = pd.read_csv(csv_path_wallet)
 df_user['summary'] = completion.choices[0].message.content
 
-print(completion.choices[0].message.content)
-
-print(df_user)
 
 url = 'https://enhanced-mastiff-99.hasura.app/api/rest/update-user'
-
 
 payload = {
     'wallet_address': df_user['wallet'].iloc[0],
     'summary': df_user['summary'].iloc[0]
 }
 
-print(type(df_user['wallet'].iloc[0]), type(df_user['summary'].iloc[0]))
-
 load_dotenv()
 api_key = os.getenv('x-hasura-admin-secret')
-print(api_key)
 headers = {
     'Content-Type': 'application/json',
     'x-hasura-admin-secret': api_key
@@ -92,8 +83,5 @@ headers = {
 try:
     response = requests.patch(url, json=payload, headers=headers)
     print(response.text)
-    print(response.status_code)  # HTTP status code
-    print(response.headers)     # Response headers
-    print(response.json()) 
 except requests.exceptions.RequestException as e:
     print(f"Error making request: {e}")
